@@ -4,5 +4,12 @@
   "description": "this is an api endpoint for bucks-bank",
   "main": "server.js",
   "author": "bucks bank team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
