@@ -1,0 +1,8 @@
+{
+  "name": "buck-bank-api",
+  "version": "1.0.0",
+  "description": "this is an api endpoint for bucks-bank",
+  "main": "server.js",
+  "author": "bucks bank team",
+  "license": "MIT"
+}
