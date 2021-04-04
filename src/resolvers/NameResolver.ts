@@ -8,21 +8,21 @@ export class NameResolver {
     return await NameModel.findById(id).exec();
   }
 
-  @Query((_returns) => [Name], { nullable: false })
-  async retunAllNames() {
+  @Query((_returns) => [Name], { nullable: "items" })
+  async returnAllNames() {
     return await NameModel.find({});
   }
 
   @Mutation((_returns) => [Name], { nullable: "items" })
   async addName(@Arg("name", { nullable: false }) name: String) {
     await NameModel.create({ name: name });
-    return await this.retunAllNames();
+    return await this.returnAllNames();
   }
 
   @Mutation((_returns) => [Name], { nullable: "items" })
   async deleteName(@Arg("name", { nullable: false }) name: String) {
     await NameModel.findOneAndRemove({ name }).exec();
-    return await this.retunAllNames();
+    return await this.returnAllNames();
   }
 
   @Mutation((_returns) => [Name], { nullable: "items" })
@@ -35,6 +35,6 @@ export class NameResolver {
       { name: to },
       { upsert: false, new: true }
     ).exec();
-    return data !== null ? await this.retunAllNames() : [];
+    return data !== null ? await this.returnAllNames() : [];
   }
 }

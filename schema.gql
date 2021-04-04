@@ -17,5 +17,5 @@ type Name {
 
 type Query {
   returnName(id: String!): Name!
-  retunAllNames: [Name!]!
+  returnAllNames: [Name]!
 }
