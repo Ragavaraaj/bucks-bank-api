@@ -1,0 +1,13 @@
+export enum DEFAULT_INCOME_TYPE {
+  SALARY,
+}
+
+export enum DEFAULT_EXPENDITURE_TYPE {
+  FOOD,
+  RENT,
+}
+
+export enum TRANSACTION_TYPE {
+  INCOME,
+  EXPENDITURE,
+}

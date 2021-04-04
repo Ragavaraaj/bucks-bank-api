@@ -3,19 +3,31 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type Mutation {
-  addName(name: String!): [Name]!
-  deleteName(name: String!): [Name]!
-  changeName(to: String!, from: String!): [Name]!
+input changeDisplayNameInputs {
+  forId: String!
+  withName: String!
 }
 
-"""The Name model"""
-type Name {
-  id: ID!
-  name: String!
+type Mutation {
+  addUser(input: UserInput!): User!
+  deleteUser(id: String!): String!
+  changeDisplayName(input: changeDisplayNameInputs!): User!
 }
 
 type Query {
-  returnName(id: String!): Name!
-  returnAllNames: [Name]!
+  returnUser(id: String!): User!
+  returnAllUser: [User]!
+}
+
+"""The User model"""
+type User {
+  id: ID!
+  name: String!
+  email: String!
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  password: String!
 }

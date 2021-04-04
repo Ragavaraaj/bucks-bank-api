@@ -3,7 +3,8 @@ import { buildSchema } from "type-graphql";
 import mongoose from "mongoose";
 
 // Resolvers
-import { NameResolver } from "./resolvers/NameResolver";
+// import { NameResolver } from "./resolvers/NameResolver";
+import { UserResolver } from "./resolvers/UserResolver";
 
 export default async () => {
   const URI = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB}`;
@@ -14,7 +15,7 @@ export default async () => {
   });
 
   const schema = await buildSchema({
-    resolvers: [NameResolver],
+    resolvers: [UserResolver],
     emitSchemaFile: true,
     validate: false,
   });
