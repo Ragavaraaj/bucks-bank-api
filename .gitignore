@@ -5,6 +5,9 @@ package-lock.json
 # testing
 /coverage
 
+# builds
+/dist
+
 # misc
 .DS_Store
 .env.prod
