@@ -4,5 +4,32 @@
   "description": "this is an api endpoint for bucks-bank",
   "main": "server.js",
   "author": "bucks bank team",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "cp .env.dev ./dist/.env && nodemon dist/server.js",
+    "prod": "cp .env.prod ./dist/.env && node dist/server.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w"
+  },
+  "dependencies": {
+    "@typegoose/typegoose": "7.6.0",
+    "@types/mongoose": "^5.7.1",
+    "apollo-server-fastify": "^2.11.0",
+    "class-validator": "^0.12.0",
+    "dotenv": "^8.2.0",
+    "fastify": "^2.14.1",
+    "graphql": "^15.3.0",
+    "mongoose": "5.10.18",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "1.1.1"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/node": "^13.9.0",
+    "nodemon": "^2.0.7",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
+  }
 }
