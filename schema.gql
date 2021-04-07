@@ -3,19 +3,88 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type Mutation {
-  addName(name: String!): [Name]!
-  deleteName(name: String!): [Name]!
-  changeName(to: String!, from: String!): [Name]!
+"""The CategoryType model"""
+type CategoryType {
+  customExpenditureType: [String]!
+  customIncomeType: [String]!
+  defaultExpenditureType: [String!]!
+  defaultIncomeType: [String!]!
+  id: ID!
 }
 
-"""The Name model"""
-type Name {
-  id: ID!
-  name: String!
+type Mutation {
+  addNewTransaction(input: TransactionDetailsInput!): String!
+  changeUserDisplayName(input: changeDisplayNameInputs!): User!
+  createUser(input: UserInput!): User!
+  deleteAllData: String!
+  deleteUser(id: String!): String!
+  updateCustomExpenditureType(input: UpdateCustomTypeInput!): [String!]!
+  updateCustomIncomeType(input: UpdateCustomTypeInput!): [String!]!
+}
+
+"""input type to get data for pagination"""
+input NewSetTransactionsInput {
+  id: String!
+  minRecords: Int
+  setNumber: Int!
 }
 
 type Query {
-  returnName(id: String!): Name!
-  retunAllNames: [Name!]!
+  returnAllUser: [User]!
+  returnCustomType(id: String!): CategoryType!
+  returnNextSetTransactions(input: NewSetTransactionsInput!): [TransactionDetails]!
+  returnUser(id: String!): User!
+}
+
+"""The TransactionDetails model"""
+type TransactionDetails {
+  amount: Int!
+  description: String
+  id: ID!
+  img: String
+  type: String!
+}
+
+"""input type to add new transaction"""
+input TransactionDetailsInput {
+  amount: Int!
+  description: String
+  img: String
+  type: String!
+  userId: String!
+}
+
+"""input type to update custom income or expenditure arr type"""
+input UpdateCustomTypeInput {
+  id: String!
+  newCategoryType: [String!]!
+}
+
+"""The User model"""
+type User {
+  categoryType: CategoryType!
+  email: String!
+  id: ID!
+  name: String!
+  userTransactions: UserTransactions!
+}
+
+"""input type to add new user"""
+input UserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+"""The UserTransactions model"""
+type UserTransactions {
+  id: ID!
+  total: Int!
+  transactions: [TransactionDetails]!
+}
+
+"""input type to update user's display name"""
+input changeDisplayNameInputs {
+  id: String!
+  name: String!
 }
