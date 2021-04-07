@@ -3,7 +3,7 @@ import { User } from "../entities/User";
 import { Min, Matches } from "class-validator";
 import { REGEX_EMAIL } from "../utils/const";
 
-@InputType()
+@InputType({ description: "input type to add new user" })
 export class UserInput implements Partial<User> {
   @Field()
   name: String;
@@ -17,11 +17,11 @@ export class UserInput implements Partial<User> {
   password: String;
 }
 
-@InputType()
+@InputType({ description: "input type to update user's display name" })
 export class changeDisplayNameInputs {
   @Field()
-  forId: String;
+  id: String;
 
   @Field()
-  withName: String;
+  name: String;
 }

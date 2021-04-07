@@ -1,39 +1,48 @@
 import { Resolver, Arg, Query, Mutation } from "type-graphql";
-import { User, UserModel } from "../entities/User";
-import { UserInput, changeDisplayNameInputs } from "../types/UserInput";
+import { User } from "../entities/User";
+import { UserInput, changeDisplayNameInputs } from "../inputTypes/UserInput";
+import {
+  deleteUserFromDb,
+  deleteAllUserFromDb,
+  getUserFromDb,
+  changeNameInDb,
+  addNewUseIntoDb,
+} from "../queries/UserQueries";
 
 @Resolver()
 export class UserResolver {
   @Query((_returns) => User, { nullable: false })
   async returnUser(@Arg("id", { nullable: false }) id: String) {
-    return await UserModel.findById(id).exec();
+    return await getUserFromDb(id);
   }
 
   @Query((_returns) => [User], { nullable: "items" })
   async returnAllUser() {
-    return await UserModel.find({});
+    return await getUserFromDb("All");
   }
 
   @Mutation((_returns) => User, { nullable: false })
-  async addUser(@Arg("input", { nullable: false }) input: UserInput) {
-    return await (await UserModel.create(input)).save();
+  async createUser(@Arg("input", { nullable: false }) input: UserInput) {
+    return await addNewUseIntoDb(input);
   }
 
   @Mutation((_returns) => String)
   async deleteUser(@Arg("id", { nullable: false }) id: String) {
-    await UserModel.findOneAndRemove({ _id: id }).exec();
+    await deleteUserFromDb(id);
     return "Success";
   }
 
   @Mutation((_returns) => User, { nullable: false })
-  async changeDisplayName(
+  async changeUserDisplayName(
     @Arg("input", { nullable: false })
-    { forId, withName }: changeDisplayNameInputs
+    { id, name }: changeDisplayNameInputs
   ) {
-    return await UserModel.findOneAndUpdate(
-      { _id: forId },
-      { name: withName },
-      { upsert: false, new: true }
-    ).exec();
+    return await changeNameInDb(id, name);
+  }
+
+  @Mutation((_returns) => String, { nullable: false })
+  async deleteAllData() {
+    await deleteAllUserFromDb();
+    return "Success";
   }
 }

@@ -1,31 +1,32 @@
 import { ObjectType, Field, ID, Int } from "type-graphql";
 import { prop as DBProperty, getModelForClass } from "@typegoose/typegoose";
-import { TRANSACTION_TYPE } from "../types/Enums";
+import { TransactionDetailsInput } from "../inputTypes/TransactionDetailsInput";
+import { TRANSACTION_TYPE } from "../utils/Enums";
 
-@ObjectType({ description: "The Category Type model" })
+@ObjectType({ description: "The TransactionDetails model" })
 export class TransactionDetails {
   @Field(() => ID)
-  id: String;
+  public id: String;
 
   @Field(() => String)
-  @DBProperty({ enum: TRANSACTION_TYPE, type: () => String, required: true })
-  category: TRANSACTION_TYPE;
-
-  @Field()
-  @DBProperty({ required: true })
-  type: String;
+  @DBProperty({ enum: TRANSACTION_TYPE })
+  public type!: TRANSACTION_TYPE;
 
   @Field(() => Int)
-  @DBProperty({ required: true })
-  amount: number;
+  @DBProperty()
+  public amount!: number;
 
   @Field({ nullable: true })
   @DBProperty()
-  description: String;
+  public description?: String;
 
-  @Field()
-  @DBProperty({ nullable: true })
-  img: String;
+  @Field({ nullable: true })
+  @DBProperty()
+  public img?: String;
+
+  public static createNewModel(input: TransactionDetailsInput) {
+    return { ...input };
+  }
 }
 
 export const TransactionDetailsModel = getModelForClass(TransactionDetails);

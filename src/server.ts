@@ -10,7 +10,7 @@ dotenv.config({
 
 initGraphqlApp()
   .then(async (graphqlServer) => {
-    const httpServer = fastify({ logger: true });
+    const httpServer = fastify({ logger: false });
     httpServer.register(graphqlServer.createHandler({ cors: false }));
     httpServer.listen(process.env.PORT || "3000", () =>
       console.log(
