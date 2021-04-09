@@ -5,8 +5,12 @@ import { TRANSACTION_TYPE } from "../utils/Enums";
 
 @ObjectType({ description: "The TransactionDetails model" })
 export class TransactionDetails {
+  public _id?: String;
+
   @Field(() => ID)
-  public id: String;
+  get id(): String {
+    return this._id ?? "NO ID";
+  }
 
   @Field(() => String)
   @DBProperty({ enum: TRANSACTION_TYPE })

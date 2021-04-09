@@ -18,9 +18,9 @@ export class NameResolver {
   @Mutation((_returns) => [Name], { nullable: "items" })
   async addName(@Arg("input", { nullable: false }) input: NameInput) {
     const newSchoolDetailsModal = await SchoolDetailsModel.create(
-      new SchoolDetails(input.schoolName, input.passedOutYear)
+      SchoolDetails.createNewModel(input.schoolName, input.passedOutYear)
     );
-    await NameModel.create(new Name(input, newSchoolDetailsModal));
+    await NameModel.create(Name.createNewModel(input, newSchoolDetailsModal));
     return await this.returnAllNames();
   }
 

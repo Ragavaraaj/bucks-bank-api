@@ -3,17 +3,22 @@ import {
   prop as DBProperty,
   getModelForClass,
   DocumentType,
+  Ref,
 } from "@typegoose/typegoose";
 import { UserInput } from "../inputTypes/UserInput";
 import { CategoryType } from "./CategoryType";
 import { UserTransactions } from "./UserTransactions";
 import { REGEX_EMAIL } from "../utils/const";
-import { FieldResolverType, Ref } from "../utils/CommonTypes";
+import { FieldResolverType } from "../utils/CommonTypes";
 
 @ObjectType({ description: "The User model" })
 export class User {
+  public _id?: String 
+
   @Field(() => ID)
-  public id: String;
+  get id(): String {
+    return this._id ?? "NO ID";
+  }
 
   @Field()
   @DBProperty({ trim: true })
@@ -32,8 +37,6 @@ export class User {
   @DBProperty({ ref: () => UserTransactions })
   public userTransactions!: Ref<UserTransactions>;
 
-  public _doc: Partial<User>
-
   public static createNewModel(
     input: UserInput,
     categoryType: DocumentType<CategoryType>,
@@ -41,8 +44,8 @@ export class User {
   ) {
     return {
       ...input,
-      categoryType: categoryType._id,
-      userTransactions: userTransactions._id,
+      categoryType: categoryType.id,
+      userTransactions: userTransactions.id,
     };
   }
 }

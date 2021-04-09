@@ -1,11 +1,12 @@
+import { Ref } from "@typegoose/typegoose";
 import { UserModel } from "../entities/User";
-import { UserTransactionsModel } from "../entities/UserTransactions";
+import { UserTransactionsModel, UserTransactions } from "../entities/UserTransactions";
 import {
   TransactionDetailsModel,
   TransactionDetails,
 } from "../entities/TransactionDetails";
 
-export const getUserTransactions = async (id: String) => {
+export const getUserTransactions = async (id: Ref<UserTransactions>) => {
   return await UserTransactionsModel.findById({
     _id: id,
   })
@@ -18,7 +19,6 @@ export const getTransactionsDetailsFromUser = async (
   from: number,
   to: number
 ) => {
-
   console.log("from => ", from, "to => ", to);
   const user = await UserModel.findById({ _id: id });
 
