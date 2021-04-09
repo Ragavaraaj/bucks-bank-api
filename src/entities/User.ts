@@ -3,7 +3,7 @@ import {
   prop as DBProperty,
   getModelForClass,
   DocumentType,
-  Ref
+  Ref,
 } from "@typegoose/typegoose";
 import { UserInput } from "../inputTypes/UserInput";
 import { CategoryType } from "./CategoryType";
@@ -13,11 +13,11 @@ import { FieldResolverType } from "../utils/CommonTypes";
 
 @ObjectType({ description: "The User model" })
 export class User {
-  private _id: String;
+  public _id?: String 
 
   @Field(() => ID)
   get id(): String {
-    return this._id;
+    return this._id ?? "NO ID";
   }
 
   @Field()
