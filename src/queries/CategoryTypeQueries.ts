@@ -1,12 +1,13 @@
+import { Ref } from "@typegoose/typegoose";
 import { UserModel } from "../entities/User";
-import { CategoryTypeModel } from "../entities/CategoryType";
+import { CategoryTypeModel, CategoryType } from "../entities/CategoryType";
 
 export const getCategoryTypeFromUser = async (id: String) => {
   const user = await UserModel.findById({ _id: id });
   return await CategoryTypeModel.findById({ _id: user?.categoryType }).exec();
 };
 
-export const getCategoryType = async (id: String) => {
+export const getCategoryType = async (id: Ref<CategoryType>) => {
   return await CategoryTypeModel.findById({ _id: id }).exec();
 };
 
