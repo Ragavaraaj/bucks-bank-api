@@ -3,6 +3,7 @@ import {
   prop as DBProperty,
   getModelForClass,
   DocumentType,
+  Ref,
 } from "@typegoose/typegoose";
 import { SchoolDetails } from "./SchoolDetails";
 import { NameInput } from "../type/NameInput";
@@ -10,8 +11,12 @@ import { FieldResolverType } from "../../utils/CommonTypes";
 
 @ObjectType({ description: "The Name model" })
 export class Name {
+  public _id?: String;
+
   @Field(() => ID)
-  public id: String;
+  get id(): String {
+    return this._id ?? "NO ID";
+  }
 
   @Field()
   @DBProperty()
@@ -22,12 +27,16 @@ export class Name {
   public phoneNumber!: number;
 
   @DBProperty({ ref: () => SchoolDetails })
-  public schoolDetails!: SchoolDetails;
+  public schoolDetails!: Ref<SchoolDetails>;
 
-  constructor(input: NameInput, schoolDetails: DocumentType<SchoolDetails>) {
-    this.name = input.name;
-    this.phoneNumber = input.phoneNumber;
-    this.schoolDetails = schoolDetails._id;
+  public static createNewModel(
+    input: NameInput,
+    schoolDetails: DocumentType<SchoolDetails>
+  ) {
+    return {
+      ...input,
+      schoolDetails: schoolDetails._id,
+    };
   }
 }
 
