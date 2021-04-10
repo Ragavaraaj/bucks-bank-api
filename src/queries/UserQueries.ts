@@ -1,4 +1,5 @@
 import { UserModel, User } from "../entities/User";
+import { UpdateUserBasicDetails } from "../inputTypes/UserInput"
 import { CategoryTypeModel, CategoryType } from "../entities/CategoryType";
 import {
   UserTransactionsModel,
@@ -21,11 +22,12 @@ export const getUserFromDb = async (id: "All" | String) => {
     : await UserModel.findById({ _id: id }).exec();
 };
 
-export const changeNameInDb = async (id: String, name: String) => {
+export const changeNameInDb = async (userDetail:UpdateUserBasicDetails ) => {
+  
   return await UserModel.findOneAndUpdate(
-    { _id: id },
-    { name: name },
-    { upsert: false, new: true }
+    { _id: userDetail.id },
+    userDetail,
+    { upsert: false, new: true, useFindAndModify: false }
   ).exec();
 };
 

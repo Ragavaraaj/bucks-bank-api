@@ -5,6 +5,7 @@ import {
   TransactionDetailsModel,
   TransactionDetails,
 } from "../entities/TransactionDetails";
+import { TransactionDetailsInput } from "../inputTypes/TransactionDetailsInput";
 
 export const getUserTransactions = async (id: Ref<UserTransactions>) => {
   return await UserTransactionsModel.findById({
@@ -13,6 +14,17 @@ export const getUserTransactions = async (id: Ref<UserTransactions>) => {
     .select({ transactions: 0 })
     .exec();
 };
+export const updateTransactionDetailsDB = async (transactionDetail: TransactionDetailsInput) => {
+  const { userId } = transactionDetail;
+  const user = await UserModel.findById({ _id: userId }).exec();
+  const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
+    { _id: user?.userTransactions },
+    { $addToSet: { ['userTransactions']: transactionDetail } },
+    { new: true }).exec()
+
+  return newTransaction;
+
+}
 
 export const getTransactionsDetailsFromUser = async (
   id: String,
@@ -45,15 +57,15 @@ export const getTransactionsDetails = async (
   return userTransactions?.transactions.slice(from, to);
 };
 
-export const insertNewTransaction = async <T>(input: T | any) => {
+export const insertNewTransaction = async (input: TransactionDetailsInput ) => {
   const newTransaction = await TransactionDetailsModel.create(
     TransactionDetails.createNewModel(input)
   );
   const user = await UserModel.findById({ _id: input.userId }).exec();
-  await UserTransactionsModel.findByIdAndUpdate(
+  return await UserTransactionsModel.findByIdAndUpdate(
     { _id: user?.userTransactions },
     { $push: { transactions: newTransaction } },
     { new: true }
   );
-  return "Success";
+
 };
