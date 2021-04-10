@@ -1,6 +1,6 @@
 import { Resolver, Arg, Query, Mutation } from "type-graphql";
 import { User } from "../entities/User";
-import { UserInput, changeDisplayNameInputs } from "../inputTypes/UserInput";
+import { UserInput, UpdateUserBasicDetails } from "../inputTypes/UserInput";
 import {
   deleteUserFromDb,
   deleteAllUserFromDb,
@@ -33,11 +33,12 @@ export class UserResolver {
   }
 
   @Mutation((_returns) => User, { nullable: false })
-  async changeUserDisplayName(
+  async updateUserBasicDetails(
     @Arg("input", { nullable: false })
-    { id, name }: changeDisplayNameInputs
+    userDetail: UpdateUserBasicDetails
   ) {
-    return await changeNameInDb(id, name);
+    console.log("dsfgdsfgsf");
+    return await changeNameInDb(userDetail);
   }
 
   @Mutation((_returns) => String, { nullable: false })

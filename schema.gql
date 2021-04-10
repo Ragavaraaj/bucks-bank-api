@@ -13,13 +13,14 @@ type CategoryType {
 }
 
 type Mutation {
-  addNewTransaction(input: TransactionDetailsInput!): String!
-  changeUserDisplayName(input: changeDisplayNameInputs!): User!
+  addNewTransaction(input: TransactionDetailsInput!): UserTransactions!
   createUser(input: UserInput!): User!
   deleteAllData: String!
   deleteUser(id: String!): String!
   updateCustomExpenditureType(input: UpdateCustomTypeInput!): [String!]!
   updateCustomIncomeType(input: UpdateCustomTypeInput!): [String!]!
+  updateTransactions(input: TransactionDetailsInput): UserTransactions!
+  updateUserBasicDetails(input: UpdateUserBasicDetails!): User!
 }
 
 """input type to get data for pagination"""
@@ -60,6 +61,13 @@ input UpdateCustomTypeInput {
   newCategoryType: [String!]!
 }
 
+"""input type to update user's display name"""
+input UpdateUserBasicDetails {
+  email: String
+  id: String!
+  name: String!
+}
+
 """The User model"""
 type User {
   categoryType: CategoryType!
@@ -81,10 +89,4 @@ type UserTransactions {
   id: ID!
   total: Int!
   transactions: [TransactionDetails]!
-}
-
-"""input type to update user's display name"""
-input changeDisplayNameInputs {
-  id: String!
-  name: String!
 }

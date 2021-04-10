@@ -18,10 +18,14 @@ export class UserInput implements Partial<User> {
 }
 
 @InputType({ description: "input type to update user's display name" })
-export class changeDisplayNameInputs {
+export class UpdateUserBasicDetails {
   @Field()
   id: String;
 
   @Field()
-  name: String;
+  name?: String;
+
+  @Field({nullable: true})
+  email?: String;
 }
+

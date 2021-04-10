@@ -1,5 +1,6 @@
 import { Resolver, Arg, Query, Mutation } from "type-graphql";
-import { TransactionDetails } from "../entities/TransactionDetails";
+import { UserTransactions } from "../entities/UserTransactions";
+import {TransactionDetails} from "../entities/TransactionDetails"
 import {
   TransactionDetailsInput,
   NewSetTransactionsInput,
@@ -7,17 +8,26 @@ import {
 import {
   insertNewTransaction,
   getTransactionsDetailsFromUser,
+  updateTransactionDetailsDB
 } from "../queries/UserTransactionQueries";
 
 @Resolver()
 export class UserTransactionResolver {
-  @Mutation((_return) => String, { nullable: false })
+  @Mutation((_return) => UserTransactions, { nullable: false })
   async addNewTransaction(
     @Arg("input", { nullable: false }) input: TransactionDetailsInput
   ) {
-    return insertNewTransaction(input);
+    const updatedUser =  await insertNewTransaction(input);
+    return updatedUser && updatedUser['transactions']
   }
 
+@Mutation((_return) => UserTransactions, {nullable: false})
+async updateTransactions(
+  @Arg("input", {nullable: true})
+  input: TransactionDetailsInput
+) {
+  return await updateTransactionDetailsDB(input)
+}
   @Query((_return) => [TransactionDetails], { nullable: "items" })
   async returnNextSetTransactions(
     @Arg("input", { nullable: false })
