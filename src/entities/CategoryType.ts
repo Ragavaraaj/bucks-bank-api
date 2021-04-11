@@ -7,12 +7,8 @@ import {
 
 @ObjectType({ description: "The CategoryType model" })
 export class CategoryType {
-  public _id?: String;
-
   @Field(() => ID)
-  get id(): String {
-    return this._id ?? "NO ID";
-  }
+  public _id?: String;
 
   @Field(() => [String])
   @DBProperty({

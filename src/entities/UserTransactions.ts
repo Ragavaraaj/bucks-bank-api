@@ -9,18 +9,13 @@ import { FieldResolverType } from "../utils/CommonTypes";
 
 @ObjectType({ description: "The UserTransactions model" })
 export class UserTransactions {
-  public _id?: String;
-
   @Field(() => ID)
-  get id(): String {
-    return this._id ?? "NO ID";
-  }
+  public _id?: String;
 
   @Field(() => Int)
   @DBProperty()
   public total!: number;
 
-  @Field(() => [TransactionDetails], { nullable: "items" })
   @DBProperty({ type: () => [TransactionDetails] })
   public transactions!: Ref<TransactionDetails>[];
 

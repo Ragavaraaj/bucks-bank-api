@@ -5,11 +5,11 @@
 
 """The CategoryType model"""
 type CategoryType {
+  _id: ID!
   customExpenditureType: [String]!
   customIncomeType: [String]!
   defaultExpenditureType: [String!]!
   defaultIncomeType: [String!]!
-  id: ID!
 }
 
 type Mutation {
@@ -39,9 +39,9 @@ type Query {
 
 """The TransactionDetails model"""
 type TransactionDetails {
+  _id: ID!
   amount: Int!
   description: String
-  id: ID!
   img: String
   type: String!
 }
@@ -70,9 +70,9 @@ input UpdateUserBasicDetails {
 
 """The User model"""
 type User {
+  _id: ID!
   categoryType: CategoryType!
   email: String!
-  id: ID!
   name: String!
   userTransactions: UserTransactions!
 }
@@ -86,7 +86,7 @@ input UserInput {
 
 """The UserTransactions model"""
 type UserTransactions {
-  id: ID!
+  _id: ID!
   total: Int!
   transactions: [TransactionDetails]!
 }

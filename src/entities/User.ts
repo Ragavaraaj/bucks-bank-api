@@ -13,12 +13,8 @@ import { FieldResolverType } from "../utils/CommonTypes";
 
 @ObjectType({ description: "The User model" })
 export class User {
-  public _id?: String 
-
   @Field(() => ID)
-  get id(): String {
-    return this._id ?? "NO ID";
-  }
+  public _id?: String;
 
   @Field()
   @DBProperty({ trim: true })
@@ -44,8 +40,8 @@ export class User {
   ) {
     return {
       ...input,
-      categoryType: categoryType.id,
-      userTransactions: userTransactions.id,
+      categoryType: categoryType._id,
+      userTransactions: userTransactions._id,
     };
   }
 }
