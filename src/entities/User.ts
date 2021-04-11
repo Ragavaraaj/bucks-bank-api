@@ -3,17 +3,18 @@ import {
   prop as DBProperty,
   getModelForClass,
   DocumentType,
+  Ref,
 } from "@typegoose/typegoose";
 import { UserInput } from "../inputTypes/UserInput";
 import { CategoryType } from "./CategoryType";
 import { UserTransactions } from "./UserTransactions";
 import { REGEX_EMAIL } from "../utils/const";
-import { FieldResolverType, Ref } from "../utils/CommonTypes";
+import { FieldResolverType } from "../utils/CommonTypes";
 
 @ObjectType({ description: "The User model" })
 export class User {
   @Field(() => ID)
-  public id: String;
+  public _id?: String;
 
   @Field()
   @DBProperty({ trim: true })
@@ -31,8 +32,6 @@ export class User {
 
   @DBProperty({ ref: () => UserTransactions })
   public userTransactions!: Ref<UserTransactions>;
-
-  public _doc: Partial<User>
 
   public static createNewModel(
     input: UserInput,

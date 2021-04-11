@@ -30,6 +30,7 @@ export default async () => {
       UserFieldResolver,
     ],
     // resolvers: [NameResolver, NameFieldResolver],
+    globalMiddlewares: [TypegooseMiddleware],
     emitSchemaFile: true,
     validate: false,
   });

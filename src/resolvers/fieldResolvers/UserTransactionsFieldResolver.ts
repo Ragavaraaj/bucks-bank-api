@@ -11,6 +11,6 @@ export class UserTransactionsFieldResolver
   implements IUserTransactionsFieldResolver {
   @FieldResolver(() => [TransactionDetails], { nullable: "items" })
   async transactions(@Root() parent: UserTransactions) {
-    return getTransactionsDetails(parent._doc._id, 0, 10);
+    return await getTransactionsDetails(parent._id!, 0, 10);
   }
 }

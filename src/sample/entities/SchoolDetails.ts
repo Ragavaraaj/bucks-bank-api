@@ -3,8 +3,12 @@ import { prop as DBProperty, getModelForClass } from "@typegoose/typegoose";
 
 @ObjectType({ description: "The Name model" })
 export class SchoolDetails {
+  public _id?: String;
+
   @Field(() => ID)
-  public id?: String;
+  get id(): String {
+    return this._id ?? "NO ID";
+  }
 
   @Field()
   @DBProperty()
@@ -14,9 +18,11 @@ export class SchoolDetails {
   @DBProperty({ min: 2 })
   public passedOutYear!: number;
 
-  constructor(schoolName: String, passedOutYear: number) {
-    this.shoolName = schoolName;
-    this.passedOutYear = passedOutYear;
+  public static createNewModel(schoolName: String, passedOutYear: number) {
+    return {
+      shoolName: schoolName,
+      passedOutYear: passedOutYear,
+    };
   }
 }
 
