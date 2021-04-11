@@ -13,10 +13,4 @@ export class NameFieldResolver implements INameFieldResolver {
       _id: name.schoolDetails,
     }).exec();
   }
-
-  @FieldResolver(() => String, { nullable: false })
-  yolo() {
-    console.log("field resolver => yolo ");
-    return "Yolo";
-  }
 }

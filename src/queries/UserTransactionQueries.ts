@@ -31,18 +31,11 @@ export const getTransactionsDetailsFromUser = async (
   from: number,
   to: number
 ) => {
-  console.log("from => ", from, "to => ", to);
   const user = await UserModel.findById({ _id: id });
-
-  console.log("User => ", user);
   const userTransactions = await UserTransactionsModel.findById({
     _id: user?.userTransactions,
   }).exec();
 
-  console.log("userTransactions => ", userTransactions);
-  const data = userTransactions?.transactions.slice(from, to);
-
-  console.log("data => ", data);
   return userTransactions?.transactions.slice(from, to);
 };
 

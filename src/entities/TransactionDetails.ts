@@ -5,14 +5,8 @@ import { TRANSACTION_TYPE } from "../utils/Enums";
 
 @ObjectType({ description: "The TransactionDetails model" })
 export class TransactionDetails {
-  
-  public _id?: String;
-
   @Field(() => ID)
-  get id(): String {
-    console.log("sdsfdfsdfdf", this);
-    return this._id ?? "NO ID";
-  }
+  public _id?: String;
 
   @Field(() => String)
   @DBProperty({ enum: TRANSACTION_TYPE })
@@ -31,7 +25,8 @@ export class TransactionDetails {
   public img?: String;
 
   public static createNewModel(input: TransactionDetailsInput) {
-    return { ...input };
+    const { userId, ...data } = input;
+    return data;
   }
 }
 

@@ -37,7 +37,6 @@ export class UserResolver {
     @Arg("input", { nullable: false })
     userDetail: UpdateUserBasicDetails
   ) {
-    console.log("dsfgdsfgsf");
     return await changeNameInDb(userDetail);
   }
 
