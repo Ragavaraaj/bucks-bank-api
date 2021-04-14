@@ -20,7 +20,7 @@ export class UserTransactionResolver {
     return await insertNewTransaction(input);
   }
 
-  @Mutation((_return) => UserTransactions, { nullable: false })
+  @Mutation((_return) => UserTransactions, { nullable: true })
   async updateTransactions(
     @Arg("input", { nullable: true })
     input: TransactionDetailsInput

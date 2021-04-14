@@ -7,7 +7,11 @@ export class TransactionDetailsInput implements Partial<TransactionDetails> {
   @Field(() => String)
   userId: String;
 
+  @Field(() => String, {nullable: true})
+  transactionId?: String;
+
   @Field(() => String)
+  
   type: TRANSACTION_TYPE;
 
   @Field(() => Int)

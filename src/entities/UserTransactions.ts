@@ -12,10 +12,16 @@ export class UserTransactions {
   @Field(() => ID)
   public _id?: String;
 
+  // @Field(() => ID)
+  // get id(): String {
+  //   return this._id ?? "NO ID";
+  // }
+
   @Field(() => Int)
   @DBProperty()
   public total!: number;
 
+  @Field(() => [TransactionDetails], { nullable: "items" })
   @DBProperty({ type: () => [TransactionDetails] })
   public transactions!: Ref<TransactionDetails>[];
 
