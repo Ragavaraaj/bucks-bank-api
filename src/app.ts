@@ -2,6 +2,7 @@ import { ApolloServer } from "apollo-server-fastify";
 import { buildSchema } from "type-graphql";
 import mongoose from "mongoose";
 import { TypegooseMiddleware } from "./middleware/TypegooseMiddleware";
+import { AuthMiddleware } from "./middleware/AuthMiddleware";
 
 // Resolvers
 // import { NameResolver } from "./sample/resolvers/NameResolver";
@@ -19,6 +20,7 @@ export default async () => {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   });
 
   const schema = await buildSchema({
@@ -30,15 +32,17 @@ export default async () => {
       UserFieldResolver,
     ],
     // resolvers: [NameResolver, NameFieldResolver],
-    globalMiddlewares: [TypegooseMiddleware],
+    globalMiddlewares: [AuthMiddleware, TypegooseMiddleware],
     emitSchemaFile: true,
     validate: false,
   });
 
   return new ApolloServer({
     schema,
-    context: () => ({
-      db: connection,
+    context: (ctx) => ({
+      dbConn: connection,
+      req: ctx.request,
+      res: ctx.reply,
     }),
   });
 };

@@ -1,26 +1,19 @@
 import { Ref } from "@typegoose/typegoose";
-import { UserModel } from "../entities/User";
 import { CategoryTypeModel, CategoryType } from "../entities/CategoryType";
 
-export const getCategoryTypeFromUser = async (id: String) => {
-  const user = await UserModel.findById({ _id: id });
-  return await CategoryTypeModel.findById({ _id: user?.categoryType }).exec();
-};
-
-export const getCategoryType = async (id: Ref<CategoryType>) => {
+export const getCategoryType = async (id: Ref<CategoryType> | string) => {
   return await CategoryTypeModel.findById({ _id: id }).exec();
 };
 
 type CustomCategoryType = "customExpenditureType" | "customIncomeType";
 
 export const updateCustomType = async (
-  id: String,
+  categoryTypeId: string,
   type: CustomCategoryType,
-  newCategoryType: String[]
+  newCategoryType: string[]
 ) => {
-  const user = await UserModel.findById({ _id: id }).exec();
   const newData = await CategoryTypeModel.findByIdAndUpdate(
-    { _id: user?.categoryType },
+    { _id: categoryTypeId },
     {
       $addToSet: { [`${type}`]: { $each: newCategoryType } },
     },

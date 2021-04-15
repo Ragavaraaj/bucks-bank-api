@@ -1,37 +1,55 @@
 import { UserModel, User } from "../entities/User";
-import { UpdateUserBasicDetails } from "../inputTypes/UserInput"
+import {
+  CreteUserInput,
+  UpdateUserBasicDetails,
+} from "../inputTypes/UserInput";
 import { CategoryTypeModel, CategoryType } from "../entities/CategoryType";
 import {
   UserTransactionsModel,
   UserTransactions,
 } from "../entities/UserTransactions";
 
-export const deleteUserFromDb = async (id: String) => {
-  await UserModel.findOneAndRemove({ _id: id }).exec();
+export const deleteUserFromDb = async (
+  userId: string,
+  categoryTypeId: string,
+  userTransactionsId: string
+) => {
+  await UserTransactionsModel.findOneAndRemove({
+    _id: userTransactionsId,
+  }).exec();
+  await CategoryTypeModel.findOneAndRemove({ _id: categoryTypeId }).exec();
+  await UserModel.findOneAndRemove({ _id: userId }).exec();
 };
 
 export const deleteAllUserFromDb = async () => {
-  await UserModel.remove({});
-  await CategoryTypeModel.remove({});
-  await UserTransactionsModel.remove({});
+  await UserModel.deleteMany({});
+  await CategoryTypeModel.deleteMany({});
+  await UserTransactionsModel.deleteMany({});
 };
 
-export const getUserFromDb = async (id: "All" | String) => {
-  return id === "All"
-    ? await UserModel.find({}).exec()
-    : await UserModel.findById({ _id: id }).exec();
+export const getAllUserFromDb = async () => {
+  return await UserModel.find({}).exec();
 };
 
-export const changeNameInDb = async (userDetail:UpdateUserBasicDetails ) => {
-  
-  return await UserModel.findOneAndUpdate(
-    { _id: userDetail.id },
-    userDetail,
-    { upsert: false, new: true, useFindAndModify: false }
-  ).exec();
+export const getUserFromDbWithId = async (id: string) => {
+  return await UserModel.findById({ _id: id }).exec();
 };
 
-export const addNewUseIntoDb = async <T>(input: T | any) => {
+export const getUserFromDbWithEmail = async (email: string) => {
+  return await UserModel.findOne({ email: email });
+};
+
+export const changeUserDetailsInDb = async (
+  userId: string,
+  userDetail: UpdateUserBasicDetails
+) => {
+  return await UserModel.findOneAndUpdate({ _id: userId }, userDetail, {
+    upsert: false,
+    new: true,
+  }).exec();
+};
+
+export const addNewUseIntoDb = async (input: CreteUserInput) => {
   const newCategoryType = await CategoryTypeModel.create(
     CategoryType.createNewModel()
   );

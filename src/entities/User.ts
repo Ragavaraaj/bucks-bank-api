@@ -5,7 +5,7 @@ import {
   DocumentType,
   Ref,
 } from "@typegoose/typegoose";
-import { UserInput } from "../inputTypes/UserInput";
+import { CreteUserInput } from "../inputTypes/UserInput";
 import { CategoryType } from "./CategoryType";
 import { UserTransactions } from "./UserTransactions";
 import { REGEX_EMAIL } from "../utils/const";
@@ -14,18 +14,18 @@ import { FieldResolverType } from "../utils/CommonTypes";
 @ObjectType({ description: "The User model" })
 export class User {
   @Field(() => ID)
-  public _id?: String;
+  public _id?: string;
 
   @Field()
   @DBProperty({ trim: true })
-  public name!: String;
+  public name!: string;
 
   @Field()
   @DBProperty({ match: REGEX_EMAIL, unique: true })
-  public email!: String;
+  public email!: string;
 
   @DBProperty({ minlength: 8 })
-  public password!: String;
+  public password!: string;
 
   @DBProperty({ ref: () => CategoryType })
   public categoryType!: Ref<CategoryType>;
@@ -33,8 +33,11 @@ export class User {
   @DBProperty({ ref: () => UserTransactions })
   public userTransactions!: Ref<UserTransactions>;
 
+  @DBProperty({ default: 0 })
+  public tokenVersion?: number;
+
   public static createNewModel(
-    input: UserInput,
+    input: CreteUserInput,
     categoryType: DocumentType<CategoryType>,
     userTransactions: DocumentType<UserTransactions>
   ) {

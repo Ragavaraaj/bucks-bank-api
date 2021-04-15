@@ -6,7 +6,7 @@ import { SchoolDetails, SchoolDetailsModel } from "../entities/SchoolDetails";
 @Resolver()
 export class NameResolver {
   @Query((_returns) => Name, { nullable: false })
-  async returnName(@Arg("id", { nullable: false }) id: String) {
+  async returnName(@Arg("id", { nullable: false }) id: string) {
     return await NameModel.findById(id).exec();
   }
 
@@ -25,15 +25,15 @@ export class NameResolver {
   }
 
   @Mutation((_returns) => [Name], { nullable: "items" })
-  async deleteName(@Arg("name", { nullable: false }) name: String) {
+  async deleteName(@Arg("name", { nullable: false }) name: string) {
     await NameModel.findOneAndRemove({ name }).exec();
     return await this.returnAllNames();
   }
 
   @Mutation((_returns) => [Name], { nullable: "items" })
   async changeName(
-    @Arg("from", { nullable: false }) from: String,
-    @Arg("to", { nullable: false }) to: String
+    @Arg("from", { nullable: false }) from: string,
+    @Arg("to", { nullable: false }) to: string
   ) {
     const data = await NameModel.findOneAndUpdate(
       { name: from },

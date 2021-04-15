@@ -8,29 +8,29 @@ import {
 @ObjectType({ description: "The CategoryType model" })
 export class CategoryType {
   @Field(() => ID)
-  public _id?: String;
+  public _id?: string;
 
   @Field(() => [String])
   @DBProperty({
     type: () => [String],
     lowercase: true,
   })
-  public defaultIncomeType!: String[];
+  public defaultIncomeType!: string[];
 
   @Field(() => [String])
   @DBProperty({
     type: () => [String],
     lowercase: true,
   })
-  public defaultExpenditureType!: String[];
+  public defaultExpenditureType!: string[];
 
   @Field(() => [String], { nullable: "items" })
   @DBProperty({ type: () => [String], lowercase: true })
-  public customIncomeType!: String[];
+  public customIncomeType!: string[];
 
   @Field(() => [String], { nullable: "items" })
   @DBProperty({ type: () => [String], lowercase: true })
-  public customExpenditureType!: String[];
+  public customExpenditureType!: string[];
 
   public static createNewModel() {
     return {

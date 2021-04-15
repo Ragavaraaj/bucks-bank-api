@@ -4,28 +4,35 @@ import { Min, Matches } from "class-validator";
 import { REGEX_EMAIL } from "../utils/const";
 
 @InputType({ description: "input type to add new user" })
-export class UserInput implements Partial<User> {
+export class CreteUserInput implements Partial<User> {
   @Field()
-  name: String;
+  name: string;
 
   @Field()
   @Matches(REGEX_EMAIL)
-  email: String;
+  email!: string;
 
   @Field()
   @Min(8)
-  password: String;
+  password!: string;
+}
+
+@InputType({ description: "input type to login" })
+export class LoginUserInput implements Partial<User> {
+  @Field()
+  @Matches(REGEX_EMAIL)
+  email: string;
+
+  @Field()
+  @Min(8)
+  password!: string;
 }
 
 @InputType({ description: "input type to update user's display name" })
 export class UpdateUserBasicDetails {
   @Field()
-  id: String;
+  name?: string;
 
-  @Field()
-  name?: String;
-
-  @Field({nullable: true})
-  email?: String;
+  @Field({ nullable: true })
+  email?: string;
 }
-
