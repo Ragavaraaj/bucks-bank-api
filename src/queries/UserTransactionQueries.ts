@@ -17,17 +17,26 @@ export const getUserTransactions = async (id: Ref<UserTransactions>) => {
     .select({ transactions: 0 })
     .exec();
 };
-export const updateTransactionDetailsDB = async (
-  userTransactionsId: string,
-  transactionDetail: TransactionDetailsInput
+export const updateTransactionDetailsDB = async (transactionDetail: TransactionDetailsInput
 ) => {
-  const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
-    { _id: userTransactionsId },
-    { $addToSet: { ["userTransactions"]: transactionDetail } },
+  //   userTransactionsId: string,
+//   transactionDetail: TransactionDetailsInput
+// ) => {
+//   const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
+//     { _id: userTransactionsId },
+//     { $addToSet: { ["userTransactions"]: transactionDetail } },
+//     { new: true }
+//   ).exec();
+
+//   return newTransaction;
+  const { userId, transactionId, ...param } = transactionDetail;
+  const user = await UserModel.findById({ _id: userId }).exec();
+  const userTransactions = await UserTransactionsModel.findOneAndUpdate(
+    { _id: user?.userTransactions, "transactions._id": transactionId },
+    { $set: { "transactions.$": param } },
     { new: true }
   ).exec();
-
-  return newTransaction;
+  return userTransactions;
 };
 
 export const getTransactionsDetailsFromUser = async (
@@ -54,10 +63,9 @@ export const getTransactionsDetails = async (
   return userTransactions?.transactions.slice(from, to);
 };
 
-export const insertNewTransaction = async (
-  userTransactionsId: string,
-  input: TransactionDetailsInput
-) => {
+
+export const insertNewTransaction = async (userTransactionsId: string, input: TransactionDetailsInput) => {
+
   const newTransaction = await TransactionDetailsModel.create(
     TransactionDetails.createNewModel(input)
   );

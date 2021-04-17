@@ -4,6 +4,10 @@ import { TRANSACTION_TYPE } from "../utils/Enums";
 
 @InputType({ description: "input type to add new transaction" })
 export class TransactionDetailsInput implements Partial<TransactionDetails> {
+  
+  @Field(() => String, {nullable: true})
+  transactionId?: String;
+
   @Field(() => String)
   type: TRANSACTION_TYPE;
 

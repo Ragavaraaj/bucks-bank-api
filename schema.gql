@@ -39,7 +39,7 @@ type Mutation {
   logoutUser: String!
   updateCustomExpenditureType(input: UpdateCustomTypeInput!): [String!]!
   updateCustomIncomeType(input: UpdateCustomTypeInput!): [String!]!
-  updateTransactions(input: TransactionDetailsInput): UserTransactions!
+  updateTransactions(input: TransactionDetailsInput): UserTransactions
   updateUserBasicDetails(input: UpdateUserBasicDetails!): User!
 }
 
@@ -71,6 +71,7 @@ input TransactionDetailsInput {
   amount: Int!
   description: String
   img: String
+  transactionId: String
   type: String!
 }
 
