@@ -17,26 +17,28 @@ export const getUserTransactions = async (id: Ref<UserTransactions>) => {
     .select({ transactions: 0 })
     .exec();
 };
-export const updateTransactionDetailsDB = async (transactionDetail: TransactionDetailsInput
-) => {
-  //   userTransactionsId: string,
-//   transactionDetail: TransactionDetailsInput
-// ) => {
-//   const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
-//     { _id: userTransactionsId },
-//     { $addToSet: { ["userTransactions"]: transactionDetail } },
-//     { new: true }
-//   ).exec();
-
-//   return newTransaction;
-  const { userId, transactionId, ...param } = transactionDetail;
-  const user = await UserModel.findById({ _id: userId }).exec();
-  const userTransactions = await UserTransactionsModel.findOneAndUpdate(
-    { _id: user?.userTransactions, "transactions._id": transactionId },
-    { $set: { "transactions.$": param } },
+export const updateTransactionDetailsDB = async( userTransactionsId: string,
+transactionDetail: TransactionDetailsInput
+) =>  {
+  const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
+    { _id: userTransactionsId },
+    { $addToSet: { ["userTransactions"]: transactionDetail } },
     { new: true }
   ).exec();
-  return userTransactions;
+
+  return newTransaction;
+  // const { userId, transactionId, ...param } = transactionDetail;
+  // const user = await UserModel.findById({ _id: userId }).exec();
+  // const userTransactions = await UserTransactionsModel.findOneAndUpdate(
+  //   { _id: user?.userTransactions, "transactions._id": transactionId },
+  //   { $set: { "transactions.$": param } },
+  //   { new: true }
+  // ).exec();
+  // return userTransactions;
+
+
+  // Saving add to array
+  // { $addToSet: { ["userTransactions"]: transactionDetail } },
 };
 
 export const getTransactionsDetailsFromUser = async (
