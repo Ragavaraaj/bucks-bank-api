@@ -8,7 +8,6 @@ export const AuthMiddleware: MiddlewareFn<MyContext> = ({ context }, next) => {
     console.log("loginUser or createUser");
     return next();
   } else {
-    console.log("other");
 
     const authorization = context.req.headers["authorization"];
 

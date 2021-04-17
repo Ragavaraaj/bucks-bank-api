@@ -20,12 +20,15 @@ export const getUserTransactions = async (id: Ref<UserTransactions>) => {
 export const updateTransactionDetailsDB = async( userTransactionsId: string,
 transactionDetail: TransactionDetailsInput
 ) =>  {
-  const newTransaction = await UserTransactionsModel.findByIdAndUpdate(
-    { _id: userTransactionsId },
-    { $addToSet: { ["userTransactions"]: transactionDetail } },
+ 
+  const {transactionId, ...transactionData} = transactionDetail;
+  console.log({transactionDetail, userTransactionsId, transactionData});
+  const newTransaction = await UserTransactionsModel.findOneAndUpdate(
+    { _id: userTransactionsId,   "transactions._id": transactionId },
+    { $set: { "transactions.$": transactionData } },
     { new: true }
   ).exec();
-
+console.log({newTransaction});
   return newTransaction;
   // const { userId, transactionId, ...param } = transactionDetail;
   // const user = await UserModel.findById({ _id: userId }).exec();
