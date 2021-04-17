@@ -11,16 +11,16 @@ import { FieldResolverType } from "../../utils/CommonTypes";
 
 @ObjectType({ description: "The Name model" })
 export class Name {
-  public _id?: String;
+  public _id?: string;
 
   @Field(() => ID)
-  get id(): String {
+  get id(): string {
     return this._id ?? "NO ID";
   }
 
   @Field()
   @DBProperty()
-  public name!: String;
+  public name!: string;
 
   @Field(() => Int)
   @DBProperty({ min: 2 })

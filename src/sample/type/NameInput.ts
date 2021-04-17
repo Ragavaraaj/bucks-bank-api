@@ -5,17 +5,17 @@ import { Min } from "class-validator";
 @InputType()
 export class NameInput implements Partial<Name> {
   @Field()
-  name: String;
+  name: string;
 
   @Field()
-  email: String;
+  email: string;
 
   @Field(() => Int)
   @Min(2)
   phoneNumber: number;
 
   @Field()
-  schoolName: String;
+  schoolName: string;
 
   @Field(() => Int)
   @Min(2)
