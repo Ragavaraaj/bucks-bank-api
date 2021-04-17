@@ -3,22 +3,22 @@ import { prop as DBProperty, getModelForClass } from "@typegoose/typegoose";
 
 @ObjectType({ description: "The Name model" })
 export class SchoolDetails {
-  public _id?: String;
+  public _id?: string;
 
   @Field(() => ID)
-  get id(): String {
+  get id(): string {
     return this._id ?? "NO ID";
   }
 
   @Field()
   @DBProperty()
-  public shoolName!: String;
+  public shoolName!: string;
 
   @Field(() => Int)
   @DBProperty({ min: 2 })
   public passedOutYear!: number;
 
-  public static createNewModel(schoolName: String, passedOutYear: number) {
+  public static createNewModel(schoolName: string, passedOutYear: number) {
     return {
       shoolName: schoolName,
       passedOutYear: passedOutYear,

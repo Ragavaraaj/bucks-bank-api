@@ -10,7 +10,7 @@ import { FieldResolverType } from "../utils/CommonTypes";
 @ObjectType({ description: "The UserTransactions model" })
 export class UserTransactions {
   @Field(() => ID)
-  public _id?: String;
+  public _id?: string;
 
   // @Field(() => ID)
   // get id(): String {

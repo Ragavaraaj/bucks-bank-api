@@ -12,11 +12,31 @@ type CategoryType {
   defaultIncomeType: [String!]!
 }
 
+"""input type to add new user"""
+input CreteUserInput {
+  email: String!
+  name: String!
+  password: String!
+}
+
+type LoginResponse {
+  accessToken: String!
+  userId: String!
+}
+
+"""input type to login"""
+input LoginUserInput {
+  email: String!
+  password: String!
+}
+
 type Mutation {
   addNewTransaction(input: TransactionDetailsInput!): UserTransactions!
-  createUser(input: UserInput!): User!
+  createUser(input: CreteUserInput!): User!
   deleteAllData: String!
-  deleteUser(id: String!): String!
+  deleteUser: String!
+  loginUser(input: LoginUserInput!): LoginResponse!
+  logoutUser: String!
   updateCustomExpenditureType(input: UpdateCustomTypeInput!): [String!]!
   updateCustomIncomeType(input: UpdateCustomTypeInput!): [String!]!
   updateTransactions(input: TransactionDetailsInput): UserTransactions
@@ -25,16 +45,16 @@ type Mutation {
 
 """input type to get data for pagination"""
 input NewSetTransactionsInput {
-  id: String!
   minRecords: Int
   setNumber: Int!
 }
 
 type Query {
+  bye: String!
   returnAllUser: [User]!
-  returnCustomType(id: String!): CategoryType!
+  returnCustomType: CategoryType!
   returnNextSetTransactions(input: NewSetTransactionsInput!): [TransactionDetails]!
-  returnUser(id: String!): User!
+  returnUser: User!
 }
 
 """The TransactionDetails model"""
@@ -53,19 +73,16 @@ input TransactionDetailsInput {
   img: String
   transactionId: String
   type: String!
-  userId: String!
 }
 
 """input type to update custom income or expenditure arr type"""
 input UpdateCustomTypeInput {
-  id: String!
   newCategoryType: [String!]!
 }
 
 """input type to update user's display name"""
 input UpdateUserBasicDetails {
   email: String
-  id: String!
   name: String!
 }
 
@@ -76,13 +93,6 @@ type User {
   email: String!
   name: String!
   userTransactions: UserTransactions!
-}
-
-"""input type to add new user"""
-input UserInput {
-  email: String!
-  name: String!
-  password: String!
 }
 
 """The UserTransactions model"""
